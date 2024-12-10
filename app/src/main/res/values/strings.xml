@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TaxiChallenge</string>
+    <string name="travel_request">Travel Request</string>
+    <string name="user_id">User ID</string>
+    <string name="origin_address">Origin Address</string>
+    <string name="enter_origin_address">Enter the origin address</string>
+    <string name="destination_address">Destination Address</string>
+    <string name="enter_destination_address">Enter the destination address</string>
+    <string name="estimate_the_price">Estimate the price</string>
+    <string name="select">Select</string>
+    <string name="driver_id">Driver ID</string>
+    <string name="enter_driver_id">Enter the driver ID</string>
+    <string name="search">Search</string>
+    <string name="travel_history">Travel History</string>
+    <string name="empty">Empty</string>
+    <string name="driver">Driver: %1$s</string>
+    <string name="history">History</string>
+    <string name="try_again">Try Again</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="travel_request_confirmed">Travel Request Confirmed</string>
+</resources>
