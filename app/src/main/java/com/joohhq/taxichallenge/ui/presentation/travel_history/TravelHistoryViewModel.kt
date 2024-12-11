@@ -29,7 +29,6 @@ class TravelHistoryViewModel(
             is TravelHistoryEvent.OnUserIdChange -> onUserIdChange(event.id)
             is TravelHistoryEvent.OnUserIdErrorChange -> onUserIdErrorChange(event.error)
             is TravelHistoryEvent.OnDriverIdChange -> onDriverIdChange(event.id)
-            is TravelHistoryEvent.OnDriverIdErrorChange -> onDriverIdErrorChange(event.error)
             TravelHistoryEvent.OnSearch -> onSearch()
             TravelHistoryEvent.ResetState -> resetState()
         }
@@ -39,13 +38,10 @@ class TravelHistoryViewModel(
         val state = state.value
         try {
             if (state.userId.isEmpty()) throw TravelException.EmptyUserId
-            if (state.driverId.isEmpty()) throw TravelException.EmptyDriverId
 
             handleUserTravelsRequest()
         } catch (e: TravelException.EmptyUserId) {
             onEvent(TravelHistoryEvent.OnUserIdErrorChange(e.message))
-        } catch (e: TravelException.EmptyDriverId) {
-            onEvent(TravelHistoryEvent.OnDriverIdErrorChange(e.message))
         }
     }
 
@@ -71,10 +67,6 @@ class TravelHistoryViewModel(
 
     private fun onDriverIdChange(id: String) {
         _state.update { it.copy(driverId = id, userIdError = null) }
-    }
-
-    private fun onDriverIdErrorChange(error: String?) {
-        _state.update { it.copy(driverIdError = error) }
     }
 
     private fun changeUserTravelsStatus(status: UiState<UserRidesResponse>) {

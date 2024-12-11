@@ -115,12 +115,6 @@ class TravelRequestScreen : Screen {
         val state by travelViewModel.state.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
-        LaunchedEffect(Unit) {
-            travelViewModel.onEvent(TravelRequestEvent.OnUserIdChange("joao"))
-            travelViewModel.onEvent(TravelRequestEvent.OnOriginChange("Av. Pres. Kenedy, 2385 - Remédios, Osasco - SP, 02675-031"))
-            travelViewModel.onEvent(TravelRequestEvent.OnDestinationChange("Av. Paulista, 1538 - Bela Vista, São Paulo - SP, 01310-200"))
-        }
-
         LaunchedEffect(state.rideEstimate) {
             state.rideEstimate.fold(
                 onError = { error ->

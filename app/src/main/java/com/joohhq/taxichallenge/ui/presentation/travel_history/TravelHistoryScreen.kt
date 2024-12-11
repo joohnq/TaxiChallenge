@@ -2,15 +2,12 @@ package com.joohhq.taxichallenge.ui.presentation.travel_history
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -30,6 +27,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.joohhq.taxichallenge.R
 import com.joohhq.taxichallenge.koinActivityViewModel
+import com.joohhq.taxichallenge.ui.components.DropDownWithLabel
 import com.joohhq.taxichallenge.ui.components.EmptyBox
 import com.joohhq.taxichallenge.ui.components.ErrorBox
 import com.joohhq.taxichallenge.ui.components.LoadingBox
@@ -41,7 +39,6 @@ import com.joohhq.taxichallenge.ui.components.VerticalSpacer
 import com.joohhq.taxichallenge.ui.presentation.travel_history.event.TravelHistoryEvent
 import com.joohhq.taxichallenge.ui.presentation.travel_history.state.TravelHistoryState
 import com.joohhq.taxichallenge.ui.presentation.travel_request.TravelRequestScreen
-import com.joohhq.taxichallenge.ui.presentation.travel_request.event.TravelRequestEvent
 import com.joohhq.taxichallenge.ui.state.UiState
 import com.joohhq.taxichallenge.ui.state.UiState.Companion.fold
 import com.joohhq.taxichallenge.ui.theme.Colors
@@ -84,12 +81,10 @@ fun TravelHistoryScreenUI(
                     onValueChange = { onEvent(TravelHistoryEvent.OnUserIdChange(it)) },
                 )
                 VerticalSpacer(10.dp)
-                TextFieldWithLabel(
+                DropDownWithLabel(
                     text = stringResource(R.string.driver_id),
-                    placeholder = stringResource(R.string.enter_driver_id),
                     value = state.driverId,
-                    error = state.driverIdError,
-                    onValueChange = { onEvent(TravelHistoryEvent.OnDriverIdChange(it)) },
+                    onClick = { onEvent(TravelHistoryEvent.OnDriverIdChange(it)) }
                 )
                 VerticalSpacer(30.dp)
                 PrimaryButton(
@@ -141,11 +136,6 @@ class TravelHistoryScreen : Screen {
         val state by travelHistoryViewModel.state.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
-        LaunchedEffect(Unit) {
-            travelHistoryViewModel.onEvent(TravelHistoryEvent.OnUserIdChange("CT01"))
-            travelHistoryViewModel.onEvent(TravelHistoryEvent.OnDriverIdChange("1"))
-        }
-
         DisposableEffect(Unit) {
             onDispose {
                 travelHistoryViewModel.onEvent(TravelHistoryEvent.ResetState)
@@ -156,7 +146,7 @@ class TravelHistoryScreen : Screen {
             snackBarHostState = snackBarHostState,
             state = state,
             onEvent = travelHistoryViewModel::onEvent,
-            onGoBack = {navigator.popUntil { it == TravelRequestScreen() }}
+            onGoBack = { navigator.popUntil { it == TravelRequestScreen() } }
         )
     }
 }

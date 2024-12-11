@@ -7,6 +7,5 @@ data class TravelHistoryState(
     val userId: String = "",
     val userIdError: String? = null,
     val driverId: String = "",
-    val driverIdError: String? = null,
     val userTravels: UiState<UserRidesResponse> = UiState.Idle,
 )
